@@ -43,5 +43,24 @@
 	function selectUser() { … }
 	function updateUser() { … }
 	function renderUser(user) { … }
-	function renderUsers(users) { … }
+	
+	//render all users
+	function renderUsers(users) {
+		
+		$tbody.empty(); 
+        for(var u=0; u<users.length; u++) {
+            console.log(users[u]);
+            var clone = $userRowTemplate.clone();
+            clone.find(".wbdv-username").html(users[u].username);
+            clone.find(".wbdv-first-name").html(users[u].firstName);
+            clone.find(".wbdv-last-name").html(users[u].username);
+            clone.find(".wbdv-role").html(users[u].firstName);
+            
+            clone.attr('id',users[u].id);
+            clone.find('#wbdv-edit').click(editUser);
+            clone.find('.wbdv-remove').click(deleteUser);
+
+            $tbody.append(clone);
+        }
+    }
 })();
