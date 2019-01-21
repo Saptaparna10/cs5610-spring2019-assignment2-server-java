@@ -1,1 +1,1 @@
-This repository contains cs5610 assignment 2 solution
+This repository contains CS 5610 assignment 2 solution
