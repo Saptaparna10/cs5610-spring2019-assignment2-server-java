@@ -1,7 +1,7 @@
 package com.example.cs5610spring2019assignment2serverjava.models;
 
 public class User {
-	private Integer id;
+	private long id;
 	private String username;
 	private String password;
 	private String firstName;
@@ -9,7 +9,7 @@ public class User {
 	private String role; 
 	
 	public User() {}
-	public User(int id, String username, String firstName, String lastName, String role) {
+	public User(long id, String username, String firstName, String lastName, String role) {
 		this.id = id;
 		this.username = username;
 		this.firstName = firstName;
@@ -23,10 +23,10 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getUsername() {
