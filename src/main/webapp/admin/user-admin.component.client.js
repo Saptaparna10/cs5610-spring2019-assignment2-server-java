@@ -24,8 +24,8 @@
 		$userRowTemplate = $('.wbdv-template');
 
 		$createBtn.click(createUser);
-		$searchBtn.click(findUserById);
-		$updateBtn.click(updateUser2);
+		$searchBtn.click(selectUser);
+		$updateBtn.click(confirmUpdate);
 		$removeBtn.click(deleteUser);
 		$editBtn.click(updateUser);
 
@@ -50,6 +50,81 @@
 		.then(findAllUsers);
 	}
 
+
+	function deleteUser(event) {
+		console.log('Deleting user');
+
+		var deleteBtn = $(event.currentTarget);
+		var userId = deleteBtn
+		.parent()
+		.parent()
+		.parent()
+		.attr('id');
+
+		userService
+		.deleteUser(userId)
+		.then(findAllUsers);
+
+	}
+
+	function selectUser() {
+		console.log('Searching user');
+		
+		var username = $('#usernameFld').val();
+		var password = $('#passwordFld').val();
+		var firstName = $('#firstNameFld').val();
+		var lastName = $('#lastNameFld').val();
+		var role = $('#roleFld').val();
+
+		//var user = new User(null, username, password, firstName, lastName, role);		
+
+		userService
+		.selectUser(username!=null? (username.length==0?null:username) : null,
+				password!=null? (password.length==0?null:password) : null,
+				firstName!=null? (firstName.length==0?null:firstName): null,
+				lastName!=null? (lastName.length==0?null:lastName): null,
+				role!=null? (role.length==0?null:role): null)
+		.then(findAllUsers);
+	}
+
+	function updateUser() {
+		console.log('Updating user');
+
+		var editBtn = $(event.currentTarget);
+
+		var userId = editBtn
+		.parent()
+		.parent()
+		.parent()
+		.attr('id');
+
+		editBtn
+		.parent()
+		.parent()
+		.parent()
+		.hide();
+
+		findUserById(userId);
+	}
+
+	function confirmUpdate() {
+		console.log('Performing actual update on user');
+
+		var userId = $('.wbdv-form').attr('id');
+
+		var username = $('#usernameFld').val();
+		var password = $('#passwordFld').val();
+		var firstName = $('#firstNameFld').val();
+		var lastName = $('#lastNameFld').val();
+		var role = $('#roleFld').val();
+
+		var user = new User(userId, username, password, firstName, lastName, role);		
+
+		userService
+		.updateUser(userId,user)
+		.then(findAllUsers);
+	}
+
 	function findAllUsers() {
 		console.log('find all users');
 
@@ -70,84 +145,26 @@
 		});
 	}
 
-	function deleteUser(event) {
-		console.log('Deleting user');
-
-		var deleteBtn = $(event.currentTarget);
-		var userId = deleteBtn
-		.parent()
-		.parent()
-		.parent()
-		.attr('id');
-
-		userService
-		.deleteUser(userId)
-		.then(findAllUsers);
-
-	}
-
-	//function selectUser() { }
-
-	function updateUser() {
-		console.log('Updating user');
-		
-		//var row = $userRowTemplate.filter()
-
-		var editBtn = $(event.currentTarget);
-
-		var userId = editBtn
-		.parent()
-		.parent()
-		.parent()
-		.attr('id');
-		
-		editBtn
-		.parent()
-		.parent()
-		.parent()
-		.hide();
-		
-		findUserById(userId);
-	}
-	
-	function updateUser2() {
-		
-		var updateBtn = $(event.currentTarget);
-		
-		var userId = $('.wbdv-form').attr('id');
-		
-		var username = $('#usernameFld').val();
-		var password = $('#passwordFld').val();
-		var firstName = $('#firstNameFld').val();
-		var lastName = $('#lastNameFld').val();
-		var role = $('#roleFld').val();
-
-		var user = new User(userId, username, password, firstName, lastName, role);		
-
-		userService
-		.updateUser(user)
-		.then(findAllUsers);
-	}
 
 	function renderUser(user) { 
 		console.log('render one user');
 
 //		$tbody.empty(); 
 		console.log(user);
-		
+
 //		var clone = $userRowTemplate.clone();
 //		clone.find(".wbdv-username").html(user.username);
 //		clone.find(".wbdv-first-name").html(user.firstName);
 //		clone.find(".wbdv-last-name").html(user.lastName);
 //		clone.find(".wbdv-role").text(user.role);
-//
+
 //		clone.attr('id',users[u].id);
 //		clone.find('#wbdv-edit').click(updateUser);
 //		clone.find('#wbdv-remove').click(deleteUser);
-//
+
 //		$tbody.append(clone);
 //		clearFields();
-		
+
 		$('.wbdv-form').attr('id', user.id);
 		$usernameFld.val(user.username);
 		$passwordFld.val(user.password);
