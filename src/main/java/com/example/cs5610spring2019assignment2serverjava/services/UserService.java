@@ -67,25 +67,19 @@ public class UserService {
 	}
 
 	@GetMapping("/api/user/{username}/{password}/{firstName}/{lastName}/{role}")
-	public List<User> findUserById(
+	public List<User> searchUser(
 			@PathVariable("username") String username,
 			@PathVariable("password") String password,
 			@PathVariable("firstName") String firstName,
 			@PathVariable("lastName") String lastName,
 			@PathVariable("role") String role) {
-
-		System.out.println(username+" "+password+" "+firstName+" "+lastName+" "+role);
-
+		
 		List<User> result = users.stream()
-				.filter(user -> Objects.nonNull(user.getUsername()))
-				.filter(user -> {if(username==null)return true;
-				else return user.getUsername().equals(username);})
-	
-//				.filter(u -> u.getUsername().equals(username) || username==null)
-//				.filter(u -> u.getUsername().equals(password) || password==null)
-//				.filter(u -> u.getUsername().equals(firstName) || firstName==null)
-//				.filter(u -> u.getUsername().equals(lastName) || lastName==null)
-//				.filter(u -> u.getUsername().equals(role) || role==null)
+				.filter(u -> u.getUsername().equals(username) || username.equals("null"))
+				.filter(u -> u.getPassword().equals(password) || password.equals("null"))
+				.filter(u -> u.getFirstName().equals(firstName) || firstName.equals("null"))
+				.filter(u -> u.getLastName().equals(lastName) || lastName.equals("null"))
+				.filter(u -> u.getRole().equals(role) || role.equals("null"))
 				.collect(Collectors.toList());
 
 		return result;

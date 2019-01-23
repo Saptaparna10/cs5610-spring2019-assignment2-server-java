@@ -84,7 +84,7 @@
 				firstName!=null? (firstName.length==0?null:firstName): null,
 				lastName!=null? (lastName.length==0?null:lastName): null,
 				role!=null? (role.length==0?null:role): null)
-		.then(findAllUsers);
+		.then(renderUsers);
 	}
 
 	function updateUser() {
