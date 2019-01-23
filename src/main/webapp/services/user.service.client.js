@@ -5,8 +5,8 @@ function AdminUserServiceClient() {
 	this.deleteUser = deleteUser;
 	this.updateUser = updateUser;
 	this.selectUser = selectUser;
-	this.url = //'https://frozen-headland-13704.herokuapp.com/api/user';
-		'http://localhost:8080/api/user';
+	this.url = 'https://frozen-headland-13704.herokuapp.com/api/user';
+		//'http://localhost:8080/api/user';
 	var self = this;
 
 	function createUser(user) {
