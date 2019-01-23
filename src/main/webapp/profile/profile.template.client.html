@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href=
+            "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="profile.style.client.css">
+    <title>Profile</title>
+</head>
+
+<body>
+
+	<div class="container-fluid wrap">
+		<h1>Profile</h1>
+
+		<div class="alert alert-success" role="alert">Profile
+			successfully saved.</div>
+
+		<form>
+			<div class="form-group row">
+				<label for="fixedUsername" class="col-sm-2 col-form-label">
+					Username </label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="fixedUsername"
+						value="Alice" disabled>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="phoneFld" class="col-sm-2 col-form-label"> Phone
+					Number </label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="phoneFld"
+						placeholder="(555) 123 4324">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="emailFld" class="col-sm-2 col-form-label"> Email
+				</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="emailFld"
+						placeholder="alice@wonderland.com">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="role" class="col-sm-2 col-form-label"> Role </label>
+				<div class="col-sm-10">
+					<select id="role" class="form-control" disabled>
+						<option value="FACULTY">Faculty</option>
+						<option value="STUDENT">Student</option>
+						<option value="ADMIN">Admin</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="dob" class="col-sm-2 col-form-label"> Date of
+					Birth </label>
+				<div class="col-sm-10">
+					<input type="date" class="form-control" id="dob">
+				</div>
+			</div>
+			<a href="#"><button id="updateBtn" type="button"
+					class="btn btn-success btn-block">Update</button></a> <a
+				href="../login/login.template.client.html"><button
+					id="logoutBtn" type="button" class="btn btn-danger btn-block">Logout</button></a>
+		</form>
+
+	</div>
+</body>
+</html>

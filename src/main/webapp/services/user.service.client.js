@@ -16,6 +16,13 @@ function AdminUserServiceClient() {
 			headers: {
 				'content-type': 'application/json'
 			}
+		}).then(function(response) {
+//			if(response==null || response==""){
+//				alert('Duplicate found!');
+//				return null;
+//			}
+//			return response.json();
+			return response.json();
 		});
 	}
 

@@ -42,6 +42,11 @@
 		var firstName = $firstNameFld.val();
 		var lastName = $lastNameFld.val();
 		var role = $roleFld.val();
+		
+		if(username==null || username==""){
+			alert('Username cannot be empty');
+			return false;
+		}
 
 		var user = new User(id, username, password, firstName, lastName, role);
 

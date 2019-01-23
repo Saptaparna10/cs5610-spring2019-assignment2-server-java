@@ -37,9 +37,16 @@ public class UserService {
 
 	@PostMapping("/api/user")
 	public User createUser(@RequestBody User user) {
-
-		users.add(user);	
-		return user;
+		
+		List<User> result = users.stream()
+				.filter(u -> u.getUsername().equals(user.getUsername()))
+				.collect(Collectors.toList());
+		
+		if(result.size()==0) {
+			users.add(user);
+			return user;
+		}
+		return null;
 	}
 
 	@DeleteMapping("/api/user/{userId}")
@@ -73,7 +80,7 @@ public class UserService {
 			@PathVariable("firstName") String firstName,
 			@PathVariable("lastName") String lastName,
 			@PathVariable("role") String role) {
-		
+
 		List<User> result = users.stream()
 				.filter(u -> u.getUsername().equals(username) || username.equals("null"))
 				.filter(u -> u.getPassword().equals(password) || password.equals("null"))
