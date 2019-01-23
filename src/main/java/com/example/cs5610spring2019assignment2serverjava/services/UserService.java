@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cs5610spring2019assignment2serverjava.models.User;
@@ -73,13 +74,13 @@ public class UserService {
 		return user;
 	}
 
-	@GetMapping("/api/user/{username}/{password}/{firstName}/{lastName}/{role}")
+	@GetMapping("/api/user/search")
 	public List<User> searchUser(
-			@PathVariable("username") String username,
-			@PathVariable("password") String password,
-			@PathVariable("firstName") String firstName,
-			@PathVariable("lastName") String lastName,
-			@PathVariable("role") String role) {
+			@RequestParam("username") String username,
+			@RequestParam("password") String password,
+			@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName,
+			@RequestParam("role") String role) {
 
 		List<User> result = users.stream()
 				.filter(u -> u.getUsername().equals(username) || username.equals("null"))

@@ -17,12 +17,9 @@ function AdminUserServiceClient() {
 				'content-type': 'application/json'
 			}
 		}).then(function(response) {
-//			if(response==null || response==""){
-//				alert('Duplicate found!');
-//				return null;
-//			}
-//			return response.json();
 			return response.json();
+		}).catch(function(err) {
+			alert('Duplicate entry found!');
 		});
 	}
 
@@ -57,7 +54,7 @@ function AdminUserServiceClient() {
 	}
 
 	function selectUser(username, password, firstName, lastName, role) {
-		return fetch(this.url +"/"+username+"/"+password+"/"+firstName+"/"+lastName+ "/"+role)
+		return fetch(this.url +"/search?username="+username+"&password="+password+"&firstName="+firstName+"&lastName="+lastName+ "&role="+role)
 		.then(function(response) {
 			return response.json();
 		});
