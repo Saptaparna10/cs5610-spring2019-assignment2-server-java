@@ -16,11 +16,8 @@ import com.example.cs5610spring2019assignment2serverjava.models.User;
 
 @RestController
 public class UserService {
-	//	User alice = new User(123, "alice", "Alice", "Wonderland");
-	//	User bob   = new User(234, "bob", "Bob", "Marley");
 
 	List<User> users = new ArrayList<>();
-	//User[] users = {alice, bob};
 
 	@GetMapping("/api/user")
 	public List<User> findAllUser() {
@@ -83,11 +80,11 @@ public class UserService {
 			@RequestParam("role") String role) {
 
 		List<User> result = users.stream()
-				.filter(u -> u.getUsername().equals(username) || username.equals("null"))
-				.filter(u -> u.getPassword().equals(password) || password.equals("null"))
-				.filter(u -> u.getFirstName().equals(firstName) || firstName.equals("null"))
-				.filter(u -> u.getLastName().equals(lastName) || lastName.equals("null"))
-				.filter(u -> u.getRole().equals(role) || role.equals("null"))
+				.filter(u -> (u.getUsername()!=null && u.getUsername().equals(username)) || username.equals("null"))
+				.filter(u -> (u.getPassword()!=null && u.getPassword().equals(password)) || password.equals("null"))
+				.filter(u -> (u.getFirstName()!=null && u.getFirstName().equals(firstName)) || firstName.equals("null"))
+				.filter(u -> (u.getLastName()!=null && u.getLastName().equals(lastName)) || lastName.equals("null"))
+				.filter(u -> (u.getRole()!=null && u.getRole().equals(role)) || role.equals("null"))
 				.collect(Collectors.toList());
 
 		return result;
