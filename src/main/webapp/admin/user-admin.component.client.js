@@ -24,10 +24,10 @@
 		$userRowTemplate = $('.wbdv-template');
 
 		$createBtn.click(createUser);
-		$searchBtn.click(selectUser);
-		$updateBtn.click(confirmUpdate);
+		$searchBtn.click(searchUser);
+		$updateBtn.click(updateUser);
 		$removeBtn.click(deleteUser);
-		$editBtn.click(updateUser);
+		$editBtn.click(selectUser);
 
 		findAllUsers();
 	}
@@ -42,7 +42,7 @@
 		var firstName = $firstNameFld.val();
 		var lastName = $lastNameFld.val();
 		var role = $roleFld.val();
-		
+
 		if(username==null || username==""){
 			alert('Username cannot be empty');
 			return false;
@@ -52,7 +52,7 @@
 
 		userService
 		.createUser(user)
-		.then(findAllUsers);
+		.then(renderUser);
 	}
 
 
@@ -72,28 +72,26 @@
 
 	}
 
-	function selectUser() {
+	function searchUser() {
 		console.log('Searching user');
-		
+
 		var username = $('#usernameFld').val();
 		var password = $('#passwordFld').val();
 		var firstName = $('#firstNameFld').val();
 		var lastName = $('#lastNameFld').val();
 		var role = $('#roleFld').val();
 
-		//var user = new User(null, username, password, firstName, lastName, role);		
-
 		userService
-		.selectUser(username!=null? (username.length==0?null:username) : null,
+		.searchUser(username!=null? (username.length==0?null:username) : null,
 				password!=null? (password.length==0?null:password) : null,
-				firstName!=null? (firstName.length==0?null:firstName): null,
-				lastName!=null? (lastName.length==0?null:lastName): null,
-				role!=null? (role.length==0?null:role): null)
-		.then(renderUsers);
+						firstName!=null? (firstName.length==0?null:firstName): null,
+								lastName!=null? (lastName.length==0?null:lastName): null,
+										role!=null? (role.length==0?null:role): null)
+										.then(renderUsers);
 	}
 
-	function updateUser() {
-		console.log('Updating user');
+	function selectUser() {
+		console.log('Selecting user');
 
 		var editBtn = $(event.currentTarget);
 
@@ -109,10 +107,20 @@
 		.parent()
 		.hide();
 
-		findUserById(userId);
+		console.log('Populating input form');
+		
+		findUserById(userId)
+		.then(function(user) {
+			$('.wbdv-form').attr('id', user.id);
+			$usernameFld.val(user.username);
+			$passwordFld.val(user.password);
+			$firstNameFld.val(user.firstName);
+			$lastNameFld.val(user.lastName);
+		});
+
 	}
 
-	function confirmUpdate() {
+	function updateUser() {
 		console.log('Performing actual update on user');
 
 		var userId = $('.wbdv-form').attr('id');
@@ -135,6 +143,7 @@
 
 		userService.findAllUsers()
 		.then(renderUsers)
+		.then(clearFields)
 		.catch(function (err){
 			throw err;
 		});
@@ -143,38 +152,27 @@
 	function findUserById(uid) { 
 		console.log('find user by id');
 
-		userService.findUserById(uid)
-		.then(renderUser)
-		.catch(function (err){
-			throw err;
-		});
+		return userService.findUserById(uid);
 	}
 
 
 	function renderUser(user) { 
-		console.log('render one user');
+		console.log('Render one user');
 
-//		$tbody.empty(); 
 		console.log(user);
 
-//		var clone = $userRowTemplate.clone();
-//		clone.find(".wbdv-username").html(user.username);
-//		clone.find(".wbdv-first-name").html(user.firstName);
-//		clone.find(".wbdv-last-name").html(user.lastName);
-//		clone.find(".wbdv-role").text(user.role);
+		var clone = $userRowTemplate.clone();
+		clone.find(".wbdv-username").html(user.username);
+		clone.find(".wbdv-first-name").html(user.firstName);
+		clone.find(".wbdv-last-name").html(user.lastName);
+		clone.find(".wbdv-role").text(user.role);
 
-//		clone.attr('id',users[u].id);
-//		clone.find('#wbdv-edit').click(updateUser);
-//		clone.find('#wbdv-remove').click(deleteUser);
+		clone.attr('id',user.id);
+		clone.find('#wbdv-edit').click(selectUser);
+		clone.find('#wbdv-remove').click(deleteUser);
 
-//		$tbody.append(clone);
-//		clearFields();
-
-		$('.wbdv-form').attr('id', user.id);
-		$usernameFld.val(user.username);
-		$passwordFld.val(user.password);
-		$firstNameFld.val(user.firstName);
-		$lastNameFld.val(user.lastName);
+		$tbody.append(clone);
+		clearFields();
 	}
 
 	//render all users
@@ -191,11 +189,11 @@
 			clone.find(".wbdv-role").text(users[u].role);
 
 			clone.attr('id',users[u].id);
-			clone.find('#wbdv-edit').click(updateUser);
-			clone.find('#wbdv-remove').click(deleteUser);
+			clone.find('.wbdv-edit').click(selectUser);
+			clone.find('.wbdv-remove').click(deleteUser);
 
 			$tbody.append(clone);
-			clearFields();
+			//clearFields();
 		}
 	}
 

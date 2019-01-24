@@ -4,7 +4,7 @@ function AdminUserServiceClient() {
 	this.findUserById = findUserById;
 	this.deleteUser = deleteUser;
 	this.updateUser = updateUser;
-	this.selectUser = selectUser;
+	this.searchUser = searchUser;
 	this.url = 'https://frozen-headland-13704.herokuapp.com/api/user';
 		//'http://localhost:8080/api/user';
 	var self = this;
@@ -50,10 +50,12 @@ function AdminUserServiceClient() {
 		return fetch(this.url+"/"+userId)
 		.then(function(response) {
 			return response.json();
+		}).catch(function(err) {
+			throw err;
 		});
 	}
 
-	function selectUser(username, password, firstName, lastName, role) {
+	function searchUser(username, password, firstName, lastName, role) {
 		return fetch(this.url +"/search?username="+username+"&password="+password+"&firstName="+firstName+"&lastName="+lastName+ "&role="+role)
 		.then(function(response) {
 			return response.json();
